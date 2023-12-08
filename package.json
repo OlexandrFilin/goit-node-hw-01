@@ -13,6 +13,7 @@
   "author": "Olexandr Filin <acfiln@ukr.net>",
   "license": "ISC",
   "dependencies": {
+    "commander": "^11.1.0",
     "nanoid": "^5.0.4"
   }
 }

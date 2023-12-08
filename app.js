@@ -1,4 +1,16 @@
 import { listContacts, getContactById, addContact , removeContact } from "./db/contacts.js";
+import { Command } from "commander";
+const program = new Command();
+program
+  .option('-a, --action <type>', 'choose action')
+  .option('-i, --id <type>', 'user id')
+  .option('-n, --name <type>', 'user name')
+  .option('-e, --email <type>', 'user email')
+  .option('-p, --phone <type>', 'user phone');
+
+program.parse(process.argv);
+
+const argv = program.opts();
 
 const invoceAction = async ({ action, id,  name, email, phone }) => {
   switch (action) {
@@ -21,11 +33,10 @@ const invoceAction = async ({ action, id,  name, email, phone }) => {
       console.log("remove contact index array", contact);
       break;
     }
+    default:
+      console.warn('\x1B[31m Unknown action type!');
+
   }
 };
-
-//invoceAction({action:'list'});
-//invoceAction({action:'get',id:'qdggE76Jtbfd9eWJHrssH'});
-//invoceAction({action:'add',name:'Olexandr',email:'ajx@google.com',phone:"(050) 3631275"});
-//invoceAction({action:'add',name:'Irina',email:'ira@google.com',phone:"(050) 4654324"});
-invoceAction({ action: "remove", id: "rbWJgoau-P7Vv7_52NUqe" });
+// console.log(argv)
+invoceAction(argv);

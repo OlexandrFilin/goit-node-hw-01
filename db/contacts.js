@@ -3,6 +3,8 @@ import { nanoid } from 'nanoid';
 import path from 'path';
 nanoid
 const pathContacts = path.resolve('db','contacts.json');
+const updateFileContacts=(contacts)=>
+    fs.writeFile(pathContacts,JSON.stringify(contacts,null,"\t"));
 
 export const  listContacts = async  ()=> {
  const data =  await fs.readFile(pathContacts);
@@ -17,8 +19,9 @@ export const  getContactById = async (id)=>{
 export const addContact = async (data)=>{
     let contacts = await listContacts();
     const contact = {id:nanoid(),...data} 
-    contacts.push(contact) ;                       
-    await fs.writeFile(pathContacts,JSON.stringify(contacts,null,"\t"));
+    contacts.push(contact) ;     
+await updateFileContacts(contacts);
+    
     return contact;
 }
 
@@ -29,6 +32,6 @@ export const removeContact = async (id)=>{
         return null;
      }
      const [delContact] =  contacts.splice(delContIndex,1);
-     fs.writeFile(pathContacts,JSON.stringify(contacts,null,"\t"))
+     await updateFileContacts(contacts);
     return delContact||nul;
 }
